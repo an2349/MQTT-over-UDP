@@ -34,7 +34,7 @@ private:
         uint32_t conn_id; // 4 bytes
         uint32_t stream_id; //4
         uint16_t topic_len; // 2 bytes
-        uint16_t last_active; // 2 bytes (Timestamp)
+        uint16_t last_active; // 2 bytes
         uint32_t package_number; // 4 bytes
         uint8_t request_type; // 1 byte
         uint16_t index; //2
