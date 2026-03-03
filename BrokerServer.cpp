@@ -177,7 +177,7 @@ void BrokerServer::even_loop(unsigned int core_id, udp_packet_t *w_offset) {
         return;
     }*/
     fcntl(worker_fd, F_SETFL, fcntl(worker_fd, F_GETFL, 0) | O_NONBLOCK);
-    //moi worker nen co mot cai ring
+
     struct io_uring ring;
     io_uring_queue_init(MAX_PACKAGE, &ring, IORING_SETUP_SQPOLL);
 
