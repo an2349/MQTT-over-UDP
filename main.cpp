@@ -1,7 +1,7 @@
 #include <iostream>
 #include <thread>
 #include "BrokerServer.cpp"
-#include "config.h"
+#include "include/config.h"
 
 int main() {
     unsigned int n = std::thread::hardware_concurrency();
