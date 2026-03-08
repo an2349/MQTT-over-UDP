@@ -6,14 +6,13 @@
 #define BROKER_PROTOCOL_H
 #include <cstdint>
 
+#include "config.h"
+
 struct connection_stream {
 };
 
 struct connection_state {
-    // bit 0: is_auth
-    // bit 1: is_encrypted
-    // bit 2-7: reserved
-    uint8_t flags; // 1 byte for Auth
+    uint8_t type;
     uint32_t conn_id; // 4 bytes
     uint32_t stream_id; //4
     uint16_t topic_len; // 2 bytes
@@ -23,32 +22,44 @@ struct connection_state {
     uint16_t index; //2
 } __attribute__((aligned(32)));
 
-struct raw_mqtt_packet {
-    uint8_t type;
-    uint16_t length;
-    uint16_t topicLen;
-    string_view topicName;
-    span<uint8_t> payload;
-};
 
 struct mqtt_packet {
     uint8_t type;
     uint32_t length;
     uint16_t topicLen;
-    string_view topicName;
-    span<uint8_t> payload;
+    uint32_t topicName;
+    uint8_t payload[PACKAGE_SIZE];
 };
 
-typedef struct {
-    uint32_t conn_id; // 4
-    uint32_t src_ip; // 4
-    uint16_t src_port; // 2
-    uint16_t packet_len; // 2
-    uint64_t seq_num; // 8
-    uint8_t status; // 1 (0: EMPTY, 1: READY, 2: WORKING)
-    uint8_t padding[43]; // Padding
-    uint8_t payload[1984]; // more
-} __attribute__((aligned(64))) udp_packet_t;
+struct __attribute__((packed)) mqtt_header {
+    uint8_t qos;
+    uint8_t retained;
+    uint16_t packetId;
+    uint32_t packetLength;
+};
 
+struct __attribute__((packed)) udp_header {
+    uint16_t src_port;
+    uint16_t dst_port;
+    uint16_t length;
+    uint16_t checksum;
+};
+struct __attribute__((packed))  my_package_header{
+    uint8_t flags; //1
+    uint32_t conn_id ;//4
+    uint32_t seq; //4
+    uint8_t auth_tag[16]; //16
+
+};
+/*typedef struct {
+    udp_header udp_header;//8
+    my_package_header package_header;
+    uint8_t padding[52];
+    uint8_t payload[1984]; //Payload
+} __attribute__((aligned(64))) udp_packet_t;*/
+
+typedef struct {
+    uint8_t raw[PACKAGE_SIZE];
+} __attribute__((aligned(64))) udp_packet_t;
 
 #endif //BROKER_PROTOCOL_H

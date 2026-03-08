@@ -1,6 +1,6 @@
 #include <iostream>
 #include <thread>
-#include "BrokerServer.cpp"
+#include "BrokerServer.h"
 #include "../include/config.h"
 
 int main() {

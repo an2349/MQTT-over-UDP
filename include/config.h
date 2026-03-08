@@ -16,7 +16,7 @@
 #define MAX_EVENTS 1000
 
 #define MAX_PACKAGE 4096
-//#define PACKAGE_SIZE 2048
+#define PACKAGE_SIZE 2048
 //#define SLOT_SIZE sizeof(udp_slot_t)
 
 #endif //BROKER_CONFIG_H

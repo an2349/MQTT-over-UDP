@@ -25,12 +25,16 @@ private:
     unsigned int core_id;
     udp_packet_t * w_offset;
 
-    void setup_any();
+    bool setup_any();
 
-    void setup_socket();
+    bool setup_socket();
+
+    bool init_uring();
 
 public:
     Workers(unsigned int id, udp_packet_t * w_offset);
+
+    bool create(unsigned int core_id);
 
     //  static void even_loop(unsigned int core_id, udp_packet_t *w_offset) ;
 
@@ -40,8 +44,6 @@ public:
 
     //Workers &operator=(const Workers &) = delete;
 
-    void init_uring();
-
-    void working();
+    void working(unsigned int id);
 };
 #endif //MQTT_UDP_TRANSPORT
