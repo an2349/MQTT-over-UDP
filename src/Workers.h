@@ -20,9 +20,10 @@
 
 class Workers {
 private:
-    int worker_fd;
-    struct io_uring ring;
-    unsigned int core_id;
+    int w_fd;
+    int& ebpf_fd;
+    struct io_uring w_uring;
+    unsigned int w_core_id;
     udp_packet_t * w_offset;
 
     bool setup_any();
@@ -32,17 +33,9 @@ private:
     bool init_uring();
 
 public:
-    Workers(unsigned int id, udp_packet_t * w_offset);
+    Workers(unsigned int id, udp_packet_t * w_offset,int ebpf_fd);
 
     bool create(unsigned int core_id);
-
-    //  static void even_loop(unsigned int core_id, udp_packet_t *w_offset) ;
-
-    //~Worker();
-
-    //Worker(const Workers &) = delete;
-
-    //Workers &operator=(const Workers &) = delete;
 
     void working(unsigned int id);
 };
