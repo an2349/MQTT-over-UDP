@@ -42,7 +42,7 @@ void BrokerServer::spawn_worker(unsigned int core_id, pid_t *workers_pid, udp_pa
     pid_t pid = fork();
     if (pid == 0) {
         uint8_t exit_code = 0;
-        Workers worker(core_id, w_offset);
+        Workers worker(core_id, w_offset, 0);
         //exit(0);
         if ( !worker.create(core_id)) {
             cerr << "Create worker " << core_id << "fail"<<endl;
